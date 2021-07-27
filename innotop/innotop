@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+docker run -v /Users/tylerreece/Documents/docker-volumes/mysql:/var/lib/mysql --rm leonisandco/innotop -h localhost -P 3306 -u root -p password -c /var/lib/mysql
