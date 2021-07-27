@@ -1,12 +1,15 @@
 # https://github.com/leonis/innotop-on-docker
-FROM centos:7
+FROM mysql:latest
+ENV MYSQL_ROOT_PASSWORD=password
+VOLUME /Users/tylerreece/Documents/docker-volumes:/var/lib/mysql
+EXPOSE 3306:3306
 
 # Install innotop and dependencies
-RUN yum -y update \
-  && yum -y install make \
-  && yum -y install wget perl-TermReadKey perl-DBI perl-DBD-mysql perl-ExtUtils-MakeMaker perl-Time-HiRes MySQL-server \
-  && yum clean all
-  && systemctl start mysql
+RUN apt -y update \
+  && apt -y upgrade \
+  && apt -y install make \
+  && apt -y install wget libterm-readkey-perl libapache-dbi-perl libdbd-mysql-perl libextutils-makemaker-cpanfile-perl libtime-hires-perl \
+  && apt clean all
 
 WORKDIR /var
 
@@ -18,4 +21,4 @@ RUN wget https://github.com/innotop/innotop/archive/v1.11.1.tar.gz \
   && cd ../ \
   && rm -rf ./innotop-1.11.1 ./v1.11.1.tar.gz
 
-ENTRYPOINT ["/usr/local/bin/innotop"]
+ENTRYPOINT ["/usr/local/bin/innotop", "-h", "localhost", "-P", "3306", "-u", "root", "-p", "password", "/run/mysqld/mysqld.sock"]
