@@ -1,4 +1,5 @@
 # https://github.com/leonis/innotop-on-docker
+# https://linux.die.net/man/1/innotop
 FROM mysql:latest
 ENV MYSQL_ROOT_PASSWORD=password
 VOLUME /Users/tylerreece/Documents/docker-volumes:/var/lib/mysql
